@@ -37,14 +37,13 @@ def savePicture(savePicturePicture, num):
 
 url = 'https://img.moegirl.org.cn/common/thumb/4/43/%E5%A4%A7%E8%80%81%E5%B8%88_character.jpg/600px-%E5%A4%A7%E8%80' \
      '%81%E5%B8%88_character.jpg '
+# url = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607079386691&di=d8dad49af4efc20fdbbef0065f850c33&imgtype=0&src=http%3A%2F%2Fa2.att.hudong.com%2F27%2F81%2F01200000194677136358818023076.jpg'
 # url = 'https://zh.moegirl.org.cn/File:%E5%A4%A7%E8%80%81%E5%B8%88_character.jpg'
-picture = requests.get(url).content
-savePicture(picture, 1)
+# picture = requests.get(url).content
+# savePicture(picture, 1)
 # print(requests.get(url).content)
 html = urlopen(url)
 bs = BeautifulSoup(html, 'lxml')
-# print(html)
-# print(bs)
-
-
-
+print(url)
+print(html)
+print(bs)
