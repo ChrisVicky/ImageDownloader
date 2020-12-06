@@ -14,6 +14,7 @@ MainPage = 'https://zh.moegirl.org.cn/Mainpage'
 HomePage = 'https://zh.moegirl.org.cn'
 SearchPageBase = 'https://zh.moegirl.org.cn/index.php?'
 numberOfPictures = 0
+MaxNum = 100
 
 
 def isPictureUrl(URL, urlForCheck):
@@ -42,7 +43,7 @@ def savePicture(IMAGE, num, Name, Location):
     fp = open(PictureName, 'wb')
     fp.write(IMAGE)
     fp.close()
-    print("Saving '"+str(Name+str(num)) + "' to " + Location)
+    print("Saving '"+str(Name+str(num)) + "' to " + Location + "\n")
     NameList.append(PictureName)
 
 
@@ -84,6 +85,8 @@ def getPicture(UrlList, tag, div, num, rec):
                 savePicture(pic, NewNum, 'Downloaded_Picture', createFile('Picture'))
                 NewNum += 1
                 url_Basic = newUrl
+                if NewNum > MaxNum:
+                    return
 
 
 def getPictureUrl(tag, div1, rec, bs):
@@ -159,48 +162,57 @@ def getFirstResult(url):
 
 def ifResults(url):
     bs = getBs(getHtml(url))
-    status = bs.find('body').attrs['class'] == 'mediawiki ltr sitedir-ltr mw-hide-empty-elt ns--1 ns-special mw-special-Search page-Special_搜索 rootpage-Special_搜索 skin-vector action-view tab'
+    status = bs.find('a', {'data-serp-pos': '0'})
     if status is None:
         return False
     return True
 
 
-print("Dear Sir/Madam:")
-print("All the pictures will be downloaded from " + MainPage + ".")
-print("Please, feel free to type in the character you want:")
-NameOfCharacter = input()
-print("Now, I'll start to download pictures of " + NameOfCharacter)
-NameOfCharacter = repairName(NameOfCharacter)
-InitialUrl = makeSearchedPage(NameOfCharacter)
-if ifResults(InitialUrl):
-    url_HomePage = getFirstResult(InitialUrl)
-else:
-    url_HomePage = InitialUrl
-if url_HomePage is None:
-    exit(0)
-print("Looking into website " + url_HomePage)
-html1 = urlopen(url_HomePage)
-bs1 = BeautifulSoup(html1, 'lxml')
+def main():
+    print("Dear Sir/Madam:")
+    print("All the pictures will be downloaded from \n" + MainPage)
+    print("Please, feel free to type in the character you want:")
+    NameOfCharacter = input("(Type in a character.)\n")
+    print("Now, I'll try to download the pictures of '" + NameOfCharacter + "'")
+    NameOfCharacter = repairName(NameOfCharacter)
+    InitialUrl = makeSearchedPage(NameOfCharacter)
+    if ifResults(InitialUrl):
+        url_HomePage = getFirstResult(InitialUrl)
+    else:
+        url_HomePage = InitialUrl
+    if url_HomePage is None:
+        exit(0)
+    print("Looking into website " + url_HomePage)
+    html1 = urlopen(url_HomePage)
+    bs1 = BeautifulSoup(html1, 'lxml')
+    global MaxNum
+    MaxNum = int(input("How many pictures do you want to download 'at most'?\n(Please type a number.)\n"))
+    getPictureUrl('a', 'href', re.compile('\.(jpg|png)$'), bs1)
+    numberOfPictures = len(NameList)
+    print("We've downloaded " + str(numberOfPictures) + " pictures.")
+    print("How many pictures do you want me to handle?")
+    TotalNum = int(input("(Type in a number less than " + str(numberOfPictures) + ".)\n"))
+    if numberOfPictures == 0:
+        print("Thanks for Using this programme.\nLooking forward to meeting you again!")
+        exit(0)
 
-getPictureUrl('a', 'href', re.compile('\.(jpg|png)$'), bs1)
+    total = 0
+    for name in NameList:
+        total += 1
+        detect(name)
+        if total >= TotalNum:
+            break
 
-numberOfPictures = len(NameList)
-print("We've downloaded " + str(numberOfPictures) + " pictures.")
-print("How many pictures do you want me to handle?")
-TotalNum = int(input())
-if numberOfPictures == 0:
-    print("Thanks for Using this programme.\nLooking forward to meeting you again!")
-    exit(0)
+    if numberOfPictures == 1:
+        print("The Picture is now in file 'Picture' and 'Faces'")
+    else:
+        print("All the Pictures are now in 'Picture' and 'Faces'")
 
-total = 0
-for name in NameList:
-    total += 1
-    detect(name)
-    if total >= TotalNum:
-        break
 
-if numberOfPictures == 1:
-    print("The Picture is now in file 'Picture' and 'Faces'")
-else:
-    print("All the Pictures are now in 'Picture' and 'Faces'")
-print("Thanks for Using this programme.\nLooking forward to meeting you again!")
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as e:
+        print("Error")
+    finally:
+        print("Thanks for Using this programme.\nLooking forward to meeting you again!")
