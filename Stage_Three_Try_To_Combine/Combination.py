@@ -42,7 +42,7 @@ def savePicture(IMAGE, num, Name, Location):
     fp = open(PictureName, 'wb')
     fp.write(IMAGE)
     fp.close()
-    print("Saving "+str(Name+str(num)))
+    print("Saving '"+str(Name+str(num)) + "' to " + Location)
     NameList.append(PictureName)
 
 
@@ -81,7 +81,7 @@ def getPicture(UrlList, tag, div, num, rec):
                 LinkList.append(newUrl)
                 pic = getContent(newUrl)
                 print("Downloading " + newUrl)
-                savePicture(pic, NewNum, 'Downloaded_Picture', createFile('picture'))
+                savePicture(pic, NewNum, 'Downloaded_Picture', createFile('Picture'))
                 NewNum += 1
                 url_Basic = newUrl
 
@@ -145,9 +145,8 @@ def repairName(Name):
     return Name
 
 
-def getFirstResult(Name):
-    Name = repairName(Name)
-    html = urlopen(makeSearchedPage(Name))
+def getFirstResult(url):
+    html = urlopen(url)
     bs = BeautifulSoup(html, 'lxml')
     status = bs.find('a', {'data-serp-pos': '0'})
     if status is None:
@@ -158,30 +157,50 @@ def getFirstResult(Name):
     return StartUrl
 
 
+def ifResults(url):
+    bs = getBs(getHtml(url))
+    status = bs.find('body').attrs['class'] == 'mediawiki ltr sitedir-ltr mw-hide-empty-elt ns--1 ns-special mw-special-Search page-Special_搜索 rootpage-Special_搜索 skin-vector action-view tab'
+    if status is None:
+        return False
+    return True
+
+
 print("Dear Sir/Madam:")
 print("All the pictures will be downloaded from " + MainPage + ".")
 print("Please, feel free to type in the character you want:")
 NameOfCharacter = input()
 print("Now, I'll start to download pictures of " + NameOfCharacter)
-url_HomePage = getFirstResult(NameOfCharacter)
+NameOfCharacter = repairName(NameOfCharacter)
+InitialUrl = makeSearchedPage(NameOfCharacter)
+if ifResults(InitialUrl):
+    url_HomePage = getFirstResult(InitialUrl)
+else:
+    url_HomePage = InitialUrl
 if url_HomePage is None:
     exit(0)
+print("Looking into website " + url_HomePage)
 html1 = urlopen(url_HomePage)
 bs1 = BeautifulSoup(html1, 'lxml')
 
-getPictureUrl('a', 'href', re.compile('\.(jpg|png)'), bs1)
+getPictureUrl('a', 'href', re.compile('\.(jpg|png)$'), bs1)
 
 numberOfPictures = len(NameList)
-print("We've download " + str(numberOfPictures) + " pictures.")
-print("And now, let us handle them.")
+print("We've downloaded " + str(numberOfPictures) + " pictures.")
+print("How many pictures do you want me to handle?")
+TotalNum = int(input())
 if numberOfPictures == 0:
     print("Thanks for Using this programme.\nLooking forward to meeting you again!")
     exit(0)
 
+total = 0
 for name in NameList:
+    total += 1
     detect(name)
+    if total >= TotalNum:
+        break
+
 if numberOfPictures == 1:
-    print("The Picture is now in file 'picture' and 'faces'")
+    print("The Picture is now in file 'Picture' and 'Faces'")
 else:
-    print("All the Pictures are now in 'picture' and 'faces'")
+    print("All the Pictures are now in 'Picture' and 'Faces'")
 print("Thanks for Using this programme.\nLooking forward to meeting you again!")
