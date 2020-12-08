@@ -14,7 +14,7 @@ def makeSearchedPage(search):
 
 def repairName(Name):
     EncodeName = str(Name.encode())
-    print("EncodeName " + EncodeName)
+    # print("EncodeName " + EncodeName)
     if '\\' not in EncodeName:
         Name = Name.replace(' ', '+')
     else:
@@ -53,4 +53,4 @@ def findTag(url):
 def FindPerson(name):
     return findTag(getResult(name))
 
-print(FindPerson('御坂琴'))
+# print(FindPerson('御坂琴'))
