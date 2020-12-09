@@ -23,7 +23,7 @@ def BackUp(name, url, path):
 
 def DownloadPicture(url, name, subFile, Num, TotalNum):
     try:
-        path = os.getcwd() + subFile
+        path = os.getcwd() + '\Results' + subFile
         if not os.path.exists(path):
             os.makedirs(path)
         picture = requests.get(url)
@@ -32,14 +32,15 @@ def DownloadPicture(url, name, subFile, Num, TotalNum):
         start = time.time()
         picture_size = int(picture.headers['content-length'])
         File_Name = path + '\\' + name + '.jpg'
-        print('[下载 %s ][第 %d 张 / 共 %d 张][大小 %.2fM ]' % (name, Num, TotalNum, float(float(picture_size)/1024/1024)))
+        print('[ %s ][第 %d 张 / 共 %d 张][大小 %.2fM ]' % (name, Num, TotalNum, float(float(picture_size)/1024/1024)))
+        print('[本地地址]:%s' % File_Name)
         print('[下载源]:%s' % url)
         with open(File_Name, 'wb') as file:
             for data in picture.iter_content(chunk_size=chunk_size):
                 file.write(data)
                 size += len(data)
                 print('\r'+'[正在下载]:%s %d%%' % ('#'*int(50*size/picture_size), min(int(100*size/picture_size), 100)), end='')
-                # time.sleep(0.01)
+                time.sleep(0.001)
         end = time.time()
         print('\n[用时]:%.2fs\n' % (end-start))
     except Exception as e:

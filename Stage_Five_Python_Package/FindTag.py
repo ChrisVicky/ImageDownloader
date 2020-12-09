@@ -26,6 +26,7 @@ def getResult(Name):
     name = repairName(Name)
     url = BaiduSearchBase + name
     html = urlopen(url)
+    print("[SearchURL]:%s" % url)
     bs = BeautifulSoup(html, 'lxml')
     Link = bs.find('div', {'class': 'spell-correct'})
     if Link:
@@ -37,20 +38,41 @@ def getResult(Name):
         print("We have not find any Results.\nPlease Try again.")
         return None
     link = status.find('dd').find('a').attrs['href']
+    if 'https://' not in link:
+        link = BaiduWikiBase + link
     return link
 
 
 def findTag(url):
+    print("[WikiURL]:%s" % url)
     html = urlopen(url)
     bs = BeautifulSoup(html, 'lxml')
-    Name = str(bs.find('br').nextSibling)
-    if Name is None:
-        exit("Ops! Wrong Name!")
+    Temp = bs.find('br')
+    if Temp is not None:
+        Name = str(Temp.nextSibling)
+        if Name is None:
+            return Exception
+    else:
+        Temp = bs.find('dt', {'class': 'basicInfo-item name'}, text='外文名')
+        Temp = Temp.nextSibling.nextSibling
+        Temp = str(Temp)
+        print("TEMP " + Temp)
+        if '(' in Temp:
+            Name = Temp[Temp.rfind('(')+1:Temp.rfind(')')]
+        else:
+            Name = Temp[Temp.find('\n')+1:Temp.rfind('\n')]
+    print("English Name = %s" % Name)
     Tag = Name.replace(' ', '_')
+    if '\n' in Tag:
+        Tag = Tag[:Tag.rfind('\n')]
+    Tag = Tag.upper()
+    Tag = Tag.swapcase()
     return Tag
 
 
 def FindPerson(name):
-    return findTag(getResult(name))
-
+    try:
+        return findTag(getResult(name))
+    except Exception as e:
+        exit(e)
 # print(FindPerson('御坂琴'))

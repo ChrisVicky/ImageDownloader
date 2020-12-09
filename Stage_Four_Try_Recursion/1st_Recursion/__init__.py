@@ -18,6 +18,16 @@ def savePicture(pic, path):
     fp.close()
 
 
+def BackUp(name, url, path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+    file_path = path + '\Backup.txt'
+    file = open(file_path, 'a')
+    Write = name + '\n' + url + '\n'
+    file.writelines('\n')
+    print("[%s]\n[%s]" % (name, url), end='\n', file=file)
+
+
 def DownloadPicture(url):
     global Count
     Count += 1
@@ -36,7 +46,8 @@ def DownloadPicture(url):
         os.makedirs(File_Name)
     data_path = File_Name + pic_name
     savePicture(picture, data_path)
-    print("<Path> " + data_path + "\n")
+    BackUp(pic_name, url, File_Name)
+    print("<Path> " + File_Name + "\n")
 
 
 def BasicDfs(url, page):

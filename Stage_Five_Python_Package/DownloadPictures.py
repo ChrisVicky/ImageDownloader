@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import Picture_Download_Und_Save
 import re
+from _Logistic_ import Restriction_Tags
 base_page = 'https://konachan.net'
 Num = 1
 
@@ -14,7 +15,11 @@ def DownloadPictures(url, TotalNum, FolderName):
     for link in LinkList:
         link = link.attrs['href']
         if link:
-            Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
+            if Restriction_Tags.Tag_legal(link):
+                Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
+            else:
+                continue
+            # Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
         Num += 1
         if Num > TotalNum:
             return
