@@ -28,7 +28,6 @@ def FaceProcess(number, TotalNumber, PictureName, filename, cascade_file="_Face_
         print('\r' + '[正在处理 %s 中]:%s %d%%' % (PictureName, '#' * int(50 * k / NUM), int(100 * float(k) / float(NUM))),
               end='')
         time.sleep(0.001)
-#     print('\r' + '[正在处理 %s 中]:%s %d%%' % (PictureName, '#' * int(50 * 1), int(100)),end='')
     print()
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)

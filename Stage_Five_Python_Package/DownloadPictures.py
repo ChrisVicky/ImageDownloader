@@ -7,6 +7,10 @@ base_page = 'https://konachan.net'
 Num = 1
 
 
+def getName(url):
+    url = url[url.rfind('/'):]
+
+
 def DownloadPictures(url, TotalNum, FolderName):
     global Num
     html = urlopen(url)
@@ -16,6 +20,7 @@ def DownloadPictures(url, TotalNum, FolderName):
         link = link.attrs['href']
         if link:
             if Restriction_Tags.Tag_legal(link):
+
                 Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
             else:
                 continue

@@ -61,7 +61,7 @@ def findTag(url):
             Name = Temp[Temp.rfind('(')+1:Temp.rfind(')')]
         else:
             Name = Temp[Temp.find('\n')+1:Temp.rfind('\n')]
-    print("English Name = %s" % Name)
+    print("[English Name]:%s" % Name)
     Tag = Name.replace(' ', '_')
     if '\n' in Tag:
         Tag = Tag[:Tag.rfind('\n')]

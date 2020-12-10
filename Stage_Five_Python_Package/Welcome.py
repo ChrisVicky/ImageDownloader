@@ -1,6 +1,7 @@
 import FindTag
 import requests
-import os
+import re
+
 
 def Introduction():
     print("欢迎使用本程序    copyright: 刘锦帆 20级 工科班 天津大学")
@@ -22,8 +23,11 @@ def GetRequirement():
         Tag = FindTag.FindPerson(Name)
         if Tag == Exception:
             return Exception
-        url = 'https://konachan.net/post?tags=' + Tag
-        FolderName = Tag
+        if re.match('[a~z]', Tag) is None:
+            print("[未检索到您要的人物，接下来将为您从k站的推荐中下载图片]")
+        else:
+            url = 'https://konachan.net/post?tags=' + Tag
+            FolderName = Tag
     elif Status == 3:
         Name = '雪之下雪乃'
         Tag = 'yukinoshita_yukino'
@@ -32,19 +36,30 @@ def GetRequirement():
     FolderName = '\\' + FolderName
     response = requests.get(url)
     if response.status_code == 200:
-        if Status == 1:
+        if Status == 1 or re.match('[a~z]', Tag) is None:
             print("将从网站[%s]下载图片" % url)
         else:
             print("将从网站[%s]下载[%s]的图片" % (url, Name))
     else:
         print("网络连接异常")
+        return ConnectionError
     print("请问您想下载最多多少张图片呢？\n（请输入一个阿拉伯数字）")
     TotalNum = int(input())
     print("好的，现在准备从[%s]下载[%d]张图片" % (url, TotalNum))
     return {'url': url, 'TotalNum': TotalNum, 'FolderName': FolderName}
 
 
+def InternetConnectionCheck():
+    print("[检查网络状况中......]")
+    try:
+        requests.get('https://www.baidu.com', timeout=2)
+        print("[您的网络连接正常]")
+    except Exception as e:
+        exit(e)
+
+
 def FeedBack():
+    InternetConnectionCheck()
     Introduction()
     Back_Get = GetRequirement()
     return Back_Get
