@@ -36,7 +36,7 @@ def GetRequirement():
     FolderName = '\\' + FolderName
     response = requests.get(url)
     if response.status_code == 200:
-        if Status == 1 or re.match('[a~z]', Tag) is None:
+        if Status == 1 or (Status == 2 and re.match('[a~z]', Tag) is None):
             print("将从网站[%s]下载图片" % url)
         else:
             print("将从网站[%s]下载[%s]的图片" % (url, Name))

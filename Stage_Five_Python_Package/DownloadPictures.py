@@ -9,6 +9,9 @@ Num = 1
 
 def getName(url):
     url = url[url.rfind('/'):]
+    url = url[url.find('Konachan.com%20')+19:]
+    url = url[:url.find('%20')]
+    return url
 
 
 def DownloadPictures(url, TotalNum, FolderName):
@@ -19,15 +22,20 @@ def DownloadPictures(url, TotalNum, FolderName):
     for link in LinkList:
         link = link.attrs['href']
         if link:
+            Name = getName(link)
             if Restriction_Tags.Tag_legal(link):
-
-                Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
+                Picture_Download_Und_Save.DownloadPicture(link, Name, FolderName, Num, TotalNum)
             else:
+                # Picture_Download_Und_Save.DownloadPicture(link, Name, '\Save'+FolderName[FolderName.find('\\')+1:], Num, TotalNum)
                 continue
             # Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
         Num += 1
         if Num > TotalNum:
-            return
+            return Num - 1
     next_link = bs.find('a', {'class': 'next_page'})
-    next_link = base_page + next_link.attrs['href']
-    DownloadPictures(next_link, TotalNum, FolderName)
+    if next_link:
+        next_link = base_page + next_link.attrs['href']
+        return DownloadPictures(next_link, TotalNum, FolderName)
+    else:
+        return Num - 1
+

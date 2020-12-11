@@ -40,7 +40,7 @@ def DownloadPicture(url, name, subFile, Num, TotalNum):
                 file.write(data)
                 size += len(data)
                 print('\r'+'[正在下载]:%s %d%%' % ('#'*int(50*size/picture_size), min(int(100*size/picture_size), 100)), end='')
-                time.sleep(0.001)
+                # time.sleep(0.001)
         end = time.time()
         print('\n[用时]:%.2fs\n' % (end-start))
     except Exception as e:
