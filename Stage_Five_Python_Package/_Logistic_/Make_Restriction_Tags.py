@@ -31,6 +31,7 @@ def collectTags(File):
     Picture_Name = os.listdir(File)
     for name in Picture_Name:
         if 'jpg' in name:
+            name = name[:name.rfind('.jpg')]
             distinguishTags(Dictionary_Tags[name])
 
 
@@ -56,8 +57,6 @@ def Sort_Dic(dic):
     lis = sorted(lis, key=lambda x: x[1], reverse=True)
     lis_return = []
     for i in lis:
-        if i[1] < 30:
-            return dict(lis_return)
         lis_return.append(i)
     return dict(lis)
 
@@ -108,6 +107,7 @@ def Test_TagOK(List):
     namelist = os.listdir(os.getcwd())
     for name in namelist:
         if 'jpg' in name:
+            name = name[:name.rfind('.jpg')]
             if Test_TagOK_Check(List, Dictionary_Tags[name]):
                 print("Not Ok")
                 return
