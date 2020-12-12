@@ -13,7 +13,7 @@ def main():
     TotalNum = FeedBack['TotalNum']
     FolderName = FeedBack['FolderName']
     num = DownloadPictures.DownloadPictures(url, TotalNum, FolderName)
-    print("[下载了%d张图片]")
+    print("[下载了%d张图片]" % num)
     Num = int(input("请问您希望处理多少张照片呢？\n"))
     FaceProcessing.Processing(FolderName, Num)
 
