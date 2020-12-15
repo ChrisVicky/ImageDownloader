@@ -15,7 +15,7 @@ def PushTag(name):
 def distinguishTags(url):
     url = url[url.rfind('Konachan.com%20-%20')+19:]
     while url:
-        Indicator_l = url.find('%20') + 3
+        Indicator_l = url.find('%20')
         url = url[Indicator_l:]
         Indicator_r = url.find('%20')
         if Indicator_r == -1:
@@ -114,7 +114,7 @@ def Test_TagOK(List):
     print("OK Yeah!")
 
 
-def UpdateRestriction():
+def DeleteRestrictionTags():
     ListRestrict = getRestriction_Tags('\Restriction_Tag.txt')
     ListSave = getRestriction_Tags('\Save_Tag.txt')
     for save in ListSave:
@@ -130,15 +130,15 @@ def UpdateRestriction():
 
 def Welcome():
     print("请将下载下来且不合法的图片、所有的BackUp.txt放入该.py同一目录下。")
-    print("接下来将获取到不合法的tags并按照数量制成txt文件，输出到本目录下")
-    print("或者您可以将应该合法的tags放在Save_Tag.txt中，并选择2，这样可以对Restriction.txt进行更新\n")
-    Status = input("1.开始程序\n")
+    print("1.接下来将获取到不合法的tags并按照数量制成txt文件，输出到本目录下")
+    print("2.或者您可以将应该合法的tags放在Save_Tag.txt中，这样可以对Restriction_Tag.txt进行删除更新\n")
+    Status = input("1.选项1\n2.选项2")
     print("You have Chosen %s" % Status)
     if Status == '1':
         make_Restriction_Tag()
         return
     elif Status == '2':
-        UpdateRestriction()
+        DeleteRestrictionTags()
         return
     else:
         exit(0)

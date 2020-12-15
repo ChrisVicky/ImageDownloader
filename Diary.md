@@ -9,3 +9,6 @@ This project shall thank https://github.com/nagadomi/lbpcascade_animeface which 
 2020/12/12:
 	Just finished the CET Band 4 Test.
 	Update a Spielen --> Means play in Duetsch, For directly download pictures from konachan.net daily -- if you click it daily -- trying to figure out how to run it automatically when the computer first starts everyday -- therotically.
+
+2020/12/15
+	I suddenly came up the idea of using the translator for the repair-name part and I'll try it right after the Math Test on 12.25.

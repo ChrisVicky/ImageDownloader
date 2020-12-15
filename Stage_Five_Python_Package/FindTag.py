@@ -1,6 +1,7 @@
 from urllib.parse import quote
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+import re
 MoeGirlLink = 'https://zh.moegirl.org.cn'
 SearchPageBase = 'https://zh.moegirl.org.cn/index.php?'
 BaiduSearchBase = 'https://baike.baidu.com/search/none?word='
@@ -52,6 +53,8 @@ def findTag(url):
         Name = str(Temp.nextSibling)
         if Name is None:
             return Exception
+        if re.match('[a-z]*', Name) is None:
+            Name = str(Temp.nextSibling.nextSibling.nextSibling)
     else:
         Temp = bs.find('dt', {'class': 'basicInfo-item name'}, text='外文名')
         Temp = Temp.nextSibling.nextSibling
@@ -61,12 +64,12 @@ def findTag(url):
             Name = Temp[Temp.rfind('(')+1:Temp.rfind(')')]
         else:
             Name = Temp[Temp.find('\n')+1:Temp.rfind('\n')]
-    print("[English Name]:%s" % Name)
     Tag = Name.replace(' ', '_')
     if '\n' in Tag:
         Tag = Tag[:Tag.rfind('\n')]
     Tag = Tag.upper()
     Tag = Tag.swapcase()
+    print("[Tag]:%s" % Tag)
     return Tag
 
 

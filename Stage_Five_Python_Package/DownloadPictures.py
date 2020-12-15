@@ -26,9 +26,9 @@ def DownloadPictures(url, TotalNum, FolderName):
             if Restriction_Tags.Tag_legal(link):
                 Picture_Download_Und_Save.DownloadPicture(link, Name, FolderName, Num, TotalNum)
             else:
+                print("[Forbidden Picture]:%s\n" % link)
                 # Picture_Download_Und_Save.DownloadPicture(link, Name, '\Save'+FolderName[FolderName.find('\\')+1:], Num, TotalNum)
                 continue
-            # Picture_Download_Und_Save.DownloadPicture(link, 'Picture_'+str(Num), FolderName, Num, TotalNum)
         Num += 1
         if Num > TotalNum:
             return Num - 1
