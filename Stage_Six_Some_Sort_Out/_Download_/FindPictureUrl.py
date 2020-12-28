@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import Picture_Download_Und_Save
+from _Download_ import PicturesDownload
 import re
 from _Logistic_ import Restriction_Tags
 base_page = 'https://konachan.net'
@@ -14,7 +14,7 @@ def getName(url):
     return url
 
 
-def DownloadPictures(url, TotalNum, FolderName):
+def FindPictureUrl(url, TotalNum, FolderName):
     global Num
     html = urlopen(url)
     bs = BeautifulSoup(html, 'lxml')
@@ -24,7 +24,7 @@ def DownloadPictures(url, TotalNum, FolderName):
         if link:
             Name = getName(link)
             if Restriction_Tags.Tag_legal(link):
-                Picture_Download_Und_Save.DownloadPicture(link, Name, FolderName, Num, TotalNum)
+                PicturesDownload.DownloadPicture(link, Name, FolderName, Num, TotalNum)
             else:
                 print("[Forbidden Picture]:%s\n" % link)
                 # Picture_Download_Und_Save.DownloadPicture(link, Name, '\Save'+FolderName[FolderName.find('\\')+1:], Num, TotalNum)
@@ -35,7 +35,7 @@ def DownloadPictures(url, TotalNum, FolderName):
     next_link = bs.find('a', {'class': 'next_page'})
     if next_link:
         next_link = base_page + next_link.attrs['href']
-        return DownloadPictures(next_link, TotalNum, FolderName)
+        return FindPictureUrl(next_link, TotalNum, FolderName)
     else:
         return Num - 1
 

@@ -1,4 +1,4 @@
-import FindTag
+from _Download_ import FindKeyWords
 import requests
 import re
 
@@ -20,7 +20,7 @@ def GetRequirement():
     if Status == 2:
         print("请问您想下载哪位动漫人物的图片呢？\n（支持中文、日文或英文输入）\n（例如：雪之下雪乃/雪之下/ゆきのした ゆきの/Yukinoshita Yukino）")
         Name = input()
-        Tag = FindTag.FindPerson(Name)
+        Tag = FindKeyWords.FindPerson(Name)
         if Tag == Exception:
             return Exception
         if re.match('[a~z]*', Tag) is None:
@@ -59,7 +59,7 @@ def InternetConnectionCheck():
 
 
 def FeedBack():
-    InternetConnectionCheck()
     Introduction()
+    InternetConnectionCheck()
     Back_Get = GetRequirement()
     return Back_Get

@@ -1,5 +1,5 @@
-import DownloadPictures
-import Welcome
+from _Download_ import FindPictureUrl
+from _Logistic_ import Welcome
 from _Face_ import FaceProcessing
 BasicUrl = 'https://konachan.net/post'
 
@@ -12,7 +12,7 @@ def main():
     url = FeedBack['url']
     TotalNum = FeedBack['TotalNum']
     FolderName = FeedBack['FolderName']
-    num = DownloadPictures.DownloadPictures(url, TotalNum, FolderName)
+    num = FindPictureUrl.FindPictureUrl(url, TotalNum, FolderName)
     print("[下载了%d张图片]" % num)
     Num = int(input("请问您希望处理多少张照片呢？\n"))
     FaceProcessing.Processing(FolderName, Num)

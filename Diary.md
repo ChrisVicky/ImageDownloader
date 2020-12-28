@@ -12,3 +12,6 @@ This project shall thank https://github.com/nagadomi/lbpcascade_animeface which 
 
 2020/12/15
 	I suddenly came up the idea of using the translator for the repair-name part and I'll try it right after the Math Test on 12.25.
+
+2020/12/28
+	I was a little worried about my programme since it had a terrible face.... Some bugs were made. I am going to debug Morgen.
