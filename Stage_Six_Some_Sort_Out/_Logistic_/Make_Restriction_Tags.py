@@ -155,7 +155,7 @@ def getRestriction_Tags(SubFile):
 
 
 def Tag_legal(url):
-    LIST = getRestriction_Tags()
+    LIST = getRestriction_Tags(FileName_txt)
     for tag in LIST:
         if tag in url:
             return False

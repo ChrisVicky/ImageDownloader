@@ -15,3 +15,6 @@ This project shall thank https://github.com/nagadomi/lbpcascade_animeface which 
 
 2020/12/28
 	I was a little worried about my programme since it had a terrible face.... Some bugs were made. I am going to debug Morgen.
+
+2021/1/1
+	Happy New Year! Many final Examinations are now on their way. I guess it's no time for the C# parts.

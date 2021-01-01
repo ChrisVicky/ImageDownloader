@@ -5,7 +5,6 @@ BasicUrl = 'https://konachan.net/post'
 
 
 def main():
-    # Nobody here but us chickens!
     FeedBack = Welcome.FeedBack()
     if FeedBack == Exception:
         raise Exception
@@ -14,7 +13,10 @@ def main():
     FolderName = FeedBack['FolderName']
     num = FindPictureUrl.FindPictureUrl(url, TotalNum, FolderName)
     print("[下载了%d张图片]" % num)
-    Num = int(input("请问您希望处理多少张照片呢？\n"))
+    if num < TotalNum:
+        print("总数好像不够多呢，可能是因为您所找的角色在网站上的图片不够多、或者是那些图片都不适合青少年")
+    print("请问您希望处理多少张照片呢？")
+    Num = Welcome.inputInteger("（请输入0~%d的阿拉伯数字）\n" % num)
     FaceProcessing.Processing(FolderName, Num)
 
 

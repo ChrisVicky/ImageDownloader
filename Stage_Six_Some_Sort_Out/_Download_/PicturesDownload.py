@@ -1,7 +1,6 @@
 import time
 import os
 import requests
-import numpy
 
 
 def SpaceCut(string):
@@ -15,10 +14,8 @@ def BackUp(name, url, path):
         os.makedirs(path)
     file_path = path + '\Backup.txt'
     file = open(file_path, 'a')
-    Write = name + '\n' + url + '\n'
     file.writelines('\n')
     print("[%s]\n[%s]" % (name, url), end='\n', file=file)
-    # numpy.savetxt(path, Write)
 
 
 def DownloadPicture(url, name, subFile, Num, TotalNum):

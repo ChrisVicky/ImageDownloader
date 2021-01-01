@@ -3,6 +3,13 @@ import requests
 import re
 
 
+def inputInteger(Message):
+    Num = input(Message)
+    while Num == "":
+        Num = input(Message)
+    return int(Num)
+
+
 def Introduction():
     print("欢迎使用本程序    copyright: 刘锦帆 20级 工科班 天津大学")
     print("本程序满足二次元爱好者收集二次元图片的需求，顺便增加了将图片制成头像的功能")
@@ -14,9 +21,9 @@ def Introduction():
 def GetRequirement():
     url = 'https://konachan.net/post'
     FolderName = 'konachan.net'
-    print("请问您希望以何种形式进行图片的下载呢？（请输入1~3的阿拉伯数字）")
+    print("请问您希望以何种形式进行图片的下载呢？")
     print("    1.从k站的推荐中下载图片\n    2.输入动漫人物名称进行检索并下载\n    3.检索并下载动漫人物[雪之下雪乃]的图片")
-    Status = int(input())
+    Status = inputInteger('（请输入1~3的阿拉伯数字）\n')
     if Status == 2:
         print("请问您想下载哪位动漫人物的图片呢？\n（支持中文、日文或英文输入）\n（例如：雪之下雪乃/雪之下/ゆきのした ゆきの/Yukinoshita Yukino）")
         Name = input()
@@ -43,8 +50,8 @@ def GetRequirement():
     else:
         print("网络连接异常")
         return ConnectionError
-    print("请问您想下载最多多少张图片呢？\n（请输入一个阿拉伯数字）")
-    TotalNum = int(input())
+    print("请问您想下载最多多少张图片呢？")
+    TotalNum = inputInteger('（请输入一个阿拉伯数字）\n')
     print("好的，现在准备从[%s]下载[%d]张图片" % (url, TotalNum))
     return {'url': url, 'TotalNum': TotalNum, 'FolderName': FolderName}
 

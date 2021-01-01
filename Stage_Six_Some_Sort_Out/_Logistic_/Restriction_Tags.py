@@ -17,7 +17,7 @@ def Tag_legal(url):
             tag1 = tag + '%'
             tag2 = tag + '.'
             if tag1 in url or tag2 in url:
-                print("\n[Forbidden tag]:%s\n[Right Here]:%s" % (tag, url[url.find(tag):]))
+                print("\n[Forbidden tag]:%s\n[Right Here]:%s" % (tag, url[url.find(tag):url.rfind('.')]))
                 return False
     return True
 
