@@ -18,3 +18,6 @@ This project shall thank https://github.com/nagadomi/lbpcascade_animeface which 
 
 2021/1/1
 	Happy New Year! Many final Examinations are now on their way. I guess it's no time for the C# parts.
+
+2020/1/2
+	Done with It. I won't do the C# parts and this shall be the Final one. Time for Essay.
