@@ -26,7 +26,7 @@ def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray_image = cv2.equalizeHist(gray_image)
     faces = cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(24, 24),)
-    BarSimulator(PictureName)
+    # BarSimulator(PictureName)
     i = 1
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
