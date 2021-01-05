@@ -1,6 +1,8 @@
 from _Download_.FindKeyWords import findPerson
 import requests
 import re
+import time
+import os
 
 
 def inputInteger(Message):
@@ -11,11 +13,10 @@ def inputInteger(Message):
 
 
 def Introduction():
-    print("欢迎使用本程序    copyright: 刘锦帆 20级 工科班 天津大学")
-    print("本程序满足二次元爱好者收集二次元图片的需求，顺便增加了将图片制成头像的功能")
-    print("首先，通过简单的 Python 爬虫 从[k站]（著名二次元图片网站） [https://konachan.net/post] 抓取并下载二次元图片")
-    print("然后，利用 open-CV [https://github.com/nagadomi/lbpcascade_animeface] 里的方法识别人物面部")
-    print("最后，将上述识别到的人物面部保存为图片，可作为 头像 使用\n")
+    print("欢迎使用本程序")
+    print("[copyright]天津大学 20级 工科班 刘锦帆")
+    print("[爬虫网站]https://konachan.net")
+    print("[动漫人脸识别open-CV]https://github.com/nagadomi/lbpcascade_animeface")
 
 
 def GetRequirement(RD):
@@ -24,7 +25,7 @@ def GetRequirement(RD):
     print("    1.从k站的推荐中下载图片")
     print("    2.输入动漫人物名称进行检索并下载")
     print("    3.检索并下载动漫人物[雪之下雪乃]的图片")
-    print("    4.从k站推荐中下载图片，并可以在下次使用本程序时更新您的图片库")
+    print("    4.从k站的推荐中下载图片，并可以在下次使用本程序时更新您的图片库")
     Status = inputInteger('（请输入1~4的阿拉伯数字）\n')
     if Status == 1:
         url = 'https://konachan.net/post'
@@ -70,10 +71,13 @@ def GetRequirement(RD):
 
 
 def InternetConnectionCheck():
-    print("[检查网络状况中......]")
+    print("\n[检查网络连接中......]")
     try:
-        requests.get('https://www.baidu.com', timeout=2)
-        print("[您的网络连接正常]\n")
+        InternetStatus = os.system('ping www.baidu.com')
+        if InternetStatus:
+            print('\n[您的网络连接好像不太正常，请检查网络设置]\n')
+            exit(ConnectionError)
+        print('\n[您的网络连接正常]\n')
     except Exception as e:
         exit(e)
 

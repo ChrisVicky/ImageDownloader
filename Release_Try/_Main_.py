@@ -42,9 +42,9 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+        print("所有的图片都保存在了该目录下的相应文件夹中。请注意查收")
     except Exception as e:
         exit(e)
     finally:
-        print("所有的图片都保存在了该目录下的相应文件夹中。请注意查收")
         print("感谢您使用本程序\nHave a nice day!\nTschüs!")
         input()

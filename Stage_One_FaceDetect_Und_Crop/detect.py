@@ -7,21 +7,20 @@ from PIL import Image
 def detect(filename, cascade_file="lbpcascade_animeface.xml"):
     if not os.path.isfile(cascade_file):
         raise RuntimeError("%s: not found" % cascade_file)
-
     cascade = cv2.CascadeClassifier(cascade_file)
     image2 = Image.open(File_Name)
     image = cv2.imread(filename, cv2.IMREAD_COLOR)
     cv2.imshow("Original.jpg", image)
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     #cv2.imshow("Gray.jpg", gray)
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
     gray = cv2.equalizeHist(gray)
-
     faces = cascade.detectMultiScale(gray,
                                      # detector options
                                      scaleFactor=1.1,
-                                     minNeighbors=5,
+                                     minNeighbors=2,
+                                     maxSize=(200, 200),
                                      minSize=(24, 24))
     i = 0
     for (x, y, w, h) in faces:

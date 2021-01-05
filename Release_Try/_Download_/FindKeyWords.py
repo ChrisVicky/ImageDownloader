@@ -33,7 +33,7 @@ def getResult(Name):
         return BaiduWikiBase + Link.find('a').attrs['href']
     status = bs.find('dl', {'class': 'search-list'})
     if status is None:
-        if len(Name) >= 1:
+        if len(Name) >= 1: # 递归查找，避免用户输入时多输入或输错了最后几个字，增加了容错性
             return getResult(Name[:len(Name)-1])
         print("We have not find any Results.\nPlease Try again.")
         return None

@@ -4,15 +4,6 @@ from PIL import Image
 import time
 
 
-def BarSimulator(PictureName):
-    NUM = 100
-    for k in range(1, NUM + 1):
-        print('\r' + '[正在处理 %s 中]:%s %d%%' % (PictureName, '#' * int(50 * k / NUM), int(100 * float(k) / float(NUM))),
-              end='')
-        time.sleep(0.001)
-    print()
-
-
 def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face_\DetectFace.xml"):
     FileSaveName = os.getcwd() + '\Results' + '\Face'
     print("[处理 %s 中][第 %d 张 / 共 %d 张]" % (PictureName, number, TotalNumber))
@@ -25,8 +16,8 @@ def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face
     image = cv2.imread(ImageFile, cv2.IMREAD_COLOR)
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray_image = cv2.equalizeHist(gray_image)
-    faces = cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(24, 24),)
-    # BarSimulator(PictureName)
+    faces = cascade.detectMultiScale(gray_image, scaleFactor=1.1,
+                                     minNeighbors=1, minSize=(100, 100),)
     i = 1
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
