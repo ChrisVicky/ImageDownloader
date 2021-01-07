@@ -1,3 +1,5 @@
+from _Logistic_.StartUp import StartUp
+StartUp()
 from _Download_.Download import Download
 from _Logistic_ import Welcome
 from _Face_.Face import Processing

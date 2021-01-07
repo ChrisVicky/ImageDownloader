@@ -1,7 +1,17 @@
 import cv2
 import os.path
 from PIL import Image
-import time
+
+
+def ScaleFace(img, H):
+    w = float(img.size[0])
+    h = float(img.size[1])
+    H = float(H)
+    percent = H/h
+    W = int(w * percent)
+    H = int(H)
+    img = img.resize((W, H), Image.ANTIALIAS)
+    return img
 
 
 def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face_\DetectFace.xml"):
@@ -17,12 +27,14 @@ def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray_image = cv2.equalizeHist(gray_image)
     faces = cascade.detectMultiScale(gray_image, scaleFactor=1.1,
-                                     minNeighbors=1, minSize=(100, 100),)
+                                     minNeighbors=3, minSize=(100, 100),)
     i = 1
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
         Face_Path = FileSaveName + '\\' + PictureName[:PictureName.rfind('.jpg')] + '_Face_'+str(i)+'.jpg'
-        image_original.crop((x, y, x+w, y+h)).save(Face_Path)
+        Face = image_original.crop((x, y, x+w, y+h))
+        Face = ScaleFace(Face, 600)
+        Face.save(Face_Path)
         i += 1
     print("[%s处理完成，检测到到%d张脸]\n" % (PictureName, len(faces)))
 

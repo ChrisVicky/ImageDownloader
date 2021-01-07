@@ -92,7 +92,6 @@ def make_Restriction_Tag():
         print(path_txt_write)
         for tag in TAGLIST:
             print(tag, file=file)
-    Test_TagOK(TAGLIST)
     return TAGLIST
 
 
