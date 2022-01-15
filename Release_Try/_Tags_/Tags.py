@@ -3,7 +3,8 @@ import os
 
 def getRestriction_Tags():
     List = []
-    path = os.getcwd() + '\_Tags_\ForbiddenTags.txt'
+    path = os.path.join(os.getcwd(), "_Tags_")
+    path = os.path.join(path, "ForbiddenTags.txt")
     with open(path, 'r') as FILE:
         for content in FILE.readlines():
             List.append(content[:content.find('\n')])

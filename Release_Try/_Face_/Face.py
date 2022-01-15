@@ -14,8 +14,8 @@ def ScaleFace(img, H):
     return img
 
 
-def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face_\DetectFace.xml"):
-    FileSaveName = os.getcwd() + '\Results' + '\Face'
+def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file=os.path.join("_Face_", "DetectFace.xml")):
+    FileSaveName = os.path.join(os.path.join(os.getcwd(), "Results"), "Face")
     print("[处理 %s 中][第 %d 张 / 共 %d 张]" % (PictureName, number, TotalNumber))
     if not os.path.exists(FileSaveName):
         os.makedirs(FileSaveName)
@@ -31,7 +31,7 @@ def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face
     i = 1
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        Face_Path = FileSaveName + '\\' + PictureName[:PictureName.rfind('.jpg')] + '_Face_'+str(i)+'.jpg'
+        Face_Path = os.path.join(FileSaveName,  PictureName[:PictureName.rfind('.jpg')] + '_Face_'+str(i)+'.jpg')
         Face = image_original.crop((x, y, x+w, y+h))
         Face = ScaleFace(Face, 600)
         Face.save(Face_Path)
@@ -40,13 +40,13 @@ def FaceProcess(number, TotalNumber, PictureName, ImageFile, cascade_file="_Face
 
 
 def Processing(subFile, Num):
-    Path = os.getcwd() + '\Results' + subFile
+    Path = os.path.join(os.path.join(os.getcwd(), "Results"), subFile)
     Picture_List = os.listdir(Path)
     i = 0
     for picture_name in Picture_List:
         if 'jpg' not in picture_name:
             continue
-        path = Path + '\\' + picture_name
+        path = os.path.join(Path, picture_name)
         i += 1
         if i > Num:
             return

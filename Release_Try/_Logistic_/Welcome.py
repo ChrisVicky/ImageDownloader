@@ -54,7 +54,6 @@ def GetRequirement(RD):
         FolderName = RD.Folder
     else:
         return ValueError
-    FolderName = '\\' + FolderName
     response = requests.get(url)
     if response.status_code == 200:
         if Status == 1 or Status == 4:
@@ -89,4 +88,4 @@ def FeedBack(RD):
 
 def Preparation():
     Introduction()
-    InternetConnectionCheck()
+    #InternetConnectionCheck()

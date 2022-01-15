@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*
 from _Logistic_.StartUp import StartUp
 StartUp()
 from _Download_.Download import Download
@@ -18,7 +19,7 @@ def main():
         Input = input()
         if Input == "":
             print("好的，将按照时间顺序下载，直到图片%d.jpg。运行期间关闭程序即可停止下载。" % RD.BackUpNum)
-            FolderName = '\\' + RD.Folder
+            FolderName = RD.Folder
             num = Download(url=RD.url, FolderName=FolderName, FinalName=RD.BackUpNum, RD=RD)
     if num is None:
         FeedBack = Welcome.FeedBack(RD)

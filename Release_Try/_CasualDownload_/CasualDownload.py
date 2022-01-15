@@ -4,7 +4,7 @@ import datetime
 
 class CDownload:
     def __init__(self):
-        self.BackupFile = os.getcwd() + '\\_CasualDownload_\\BackupR.txt'
+        self.BackupFile = os.path.join(os.path.join(os.getcwd(), "_CasualDownload_"), "BackupR.txt")
         self.url = 'https://konachan.net/post'
         self.Folder = str(datetime.date.today())
         self.BackUpNum = None
