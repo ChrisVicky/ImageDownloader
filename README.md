@@ -1,4 +1,4 @@
-# ImageDownder
+# ImageDownloader
 
 This is an online repository for an optional coding homework in Autum, 2020.
 
